@@ -4,6 +4,7 @@ import MyButton from "./UI/mybutton/myButton";
 import MyInput from "./UI/input/MyInput";
 import { SearchContext } from "../context";
 import { useNavigate } from 'react-router-dom'
+import { Dropdown } from 'react-bootstrap';
 
 
 
@@ -22,6 +23,18 @@ const MyNavbar = (props) => {
     const btnStyle2 = {
         backgroundColor: "#585B9A",
         borderColor: "#585B9A",
+    };
+
+    const [activeItem, setActiveItem] = useState(null);
+
+    const handleProfileClick = () => {
+        setActiveItem('profile');
+        // Другие действия, связанные с элементом "Профиль"
+    };
+
+    const handleLogoutClick = () => {
+        setActiveItem('logout');
+        // Другие действия, связанные с элементом "Выйти"
     };
 
 
@@ -43,8 +56,6 @@ const MyNavbar = (props) => {
                 />
                 <button
                     className="btn btn-primary"
-                    type="button"
-                    id="button-addon2"
                     style={hov ? btnStyle2 : btnStyle1}
                     onMouseEnter={() => setHov(true)}
                     onMouseLeave={() => setHov(false)}
@@ -53,9 +64,27 @@ const MyNavbar = (props) => {
                     Найти
                 </button>
             </div>
-            <a class="navbar-brand mx-3" href="profile">
+
+            <Dropdown >
+                <Dropdown.Toggle variant="light" id="profile-dropdown" style={{backgroundColor:'#F4F9E9'}}>
+                    <img src="images/profile.png" width="50" height="50" />
+                </Dropdown.Toggle>
+
+                <Dropdown.Menu style={{backgroundColor:'#F4F9E9'}}  >
+                <Dropdown.Item href='profile' onClick={handleProfileClick} className="custom-dropdown-item">
+                        Профиль
+                    </Dropdown.Item>
+                    <hr />
+                    <Dropdown.Item onClick={handleLogoutClick} className="custom-dropdown-item">
+                        Выйти
+                    </Dropdown.Item>
+                </Dropdown.Menu>
+            </Dropdown>
+
+            {/* <a class="navbar-brand mx-3" href="profile">
                 <img src="images/profile.png" width="50" height="50" />
-            </a>
+            </a> */}
+
         </nav>
 
     )

@@ -26,16 +26,25 @@ function Profile() {
 
 
     async function fetchRatings() {
-        const Ratings = await BookService.getUsersRatings(me.id)
-        if (Ratings != undefined) {
-            setRatings(Ratings)
+        const storedData = localStorage.getItem('user')
+        if (storedData) {
+            const parsedData = JSON.parse(storedData)
+            setUser(parsedData)
+            const Ratings = await BookService.getUsersRatings(parsedData.id)
+            if (Ratings != undefined) {
+                setRatings(Ratings)
+            }
         }
     }
 
     async function fetchBooks() {
-        const Books = await BookService.getBooksForUser(me.id)
-        if (Books != undefined) {
-            setBooks(Books)
+        const storedData = localStorage.getItem('user')
+        if (storedData) {
+            const parsedData = JSON.parse(storedData)
+            const Books = await BookService.getBooksForUser(parsedData.id)
+            if (Books != undefined) {
+                setBooks(Books)
+            }
         }
     }
 
@@ -51,7 +60,7 @@ function Profile() {
                                 bookInfo={bookInfo} />
                         </MyModal>
                         <div style={{ color: "#03264F" }}>
-                            Профиль {me.username}<br />
+                            Профиль {user.username}<br />
                             Список прочитанных книг
                         </div>
                         <ProfileBookList

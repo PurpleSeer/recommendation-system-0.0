@@ -31,4 +31,13 @@ export default class UserService{
             console.log(e)
         }
     }
+
+    static async postRating(user){
+        try{
+            await axios.post('http://127.0.0.1:8000/api/v1/rating/', user)
+        }
+        catch(e){
+            console.log(e)
+        }
+    }
 }

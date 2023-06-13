@@ -34,3 +34,13 @@ body{
 .nav{
     flex-wrap: nowrap !important;
 }
+
+.custom-dropdown-item.active,
+.custom-dropdown-item:active {
+  background-color: #585B9A;
+  color: #ffffff;
+}
+
+.custom-dropdown-item:hover{
+    background-color:#9999C3 ;
+}

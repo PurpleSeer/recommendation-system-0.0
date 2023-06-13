@@ -30,8 +30,8 @@ const BookItem = ({books, visible, setBookInfo}) => {
             style={{
                 width: '8rem', backgroundColor: '#F4F9E9', border: 2, border: 'solid', borderColor: '#9999C3'
                 , borderRadius: 10, cursor: 'pointer' , margin: 2, marginBottom: 0
-            }} onClick={fun}>
-            <img src={books.image_url_l} class="card-img-top my-3" alt="..." height={180} title={books.book_title} />
+            }} onClick={fun} title={books.book_title}>
+            <img src={books.image_url_l} class="card-img-top my-3" alt="..." height={180}  />
             <p class="mx-3" style={{ fontSize: 20 + "px", transform:'rotate(270deg)', whiteSpace:'nowrap', marginTop:300}}>
                 <h4>
                     {truncateString(books.book_title, 30)}

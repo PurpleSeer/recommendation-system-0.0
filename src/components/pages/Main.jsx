@@ -7,6 +7,7 @@ import MyModal from "../UI/MyModal/MyModal";
 import BookInfo from "../BookInfo";
 import { SearchContext, UserContext } from "../../context";
 import { useNavigate } from 'react-router-dom'
+import Loader from "../UI/Loader/Loader";
 
 
 
@@ -17,6 +18,8 @@ function Main() {
   const [rec, setRec] = useState([])
   const [user, setUser] = useState({})
   const [modal, setModal] = useState(false)
+  const [hov, setHov] = useState(false)
+  const [isBookLoading, setIsBookLoading] = useState(false)
 
   const { searchQuery, setSearchQuery } = useContext(SearchContext);
   const { me, setMe } = useContext(UserContext)
@@ -26,7 +29,6 @@ function Main() {
 
 
   useEffect(() => {
-    fetchUser();
     fetchRecommendations()
   }, [])
 
@@ -41,28 +43,35 @@ function Main() {
     }
   }
 
-  console.log(user)
 
   async function postRecommendations() {
+    setIsBookLoading(true)
     const storedData = localStorage.getItem('user')
     if (storedData) {
       const parsedData = JSON.parse(storedData)
       let pol = { user_id: parsedData.id }
-      console.log(pol)
       const recommendation = await BookService.postRecommendations(pol);
       if (recommendation != undefined) {
         setBooks(recommendation)
       }
     }
+    setIsBookLoading(false)
   }
 
   function search() {
     router('/search')
   }
 
-  function fetchUser() {
 
-  }
+  const btnStyle1 = {
+    backgroundColor: "#9999C3",
+    borderColor: "#9999C3",
+};
+
+const btnStyle2 = {
+    backgroundColor: "#585B9A",
+    borderColor: "#585B9A",
+};
 
   return (
     <div className="App" >
@@ -80,14 +89,22 @@ function Main() {
 
             <div style={{ color: "#03264F" }}>
               Рекомендации
-              <BookList
-                books={books}
-                visible={setModal}
-                setBookInfo={setBookInfo} />
-              <div class="row justify-content-between">
-                <button onClick={postRecommendations}>
+              {isBookLoading
+                ? <div style={{display: 'flex', justifyContent:'center'}}><Loader/></div>
+                : <BookList books={books} visible={setModal} setBookInfo={setBookInfo} />
+              }
+
+              <div class="row justify-content-center">
+                <button 
+                  className="btn btn-primary"
+                  style={hov ? btnStyle2 : btnStyle1}
+                  onMouseEnter={() => setHov(true)}
+                  onMouseLeave={() => setHov(false)}
+                  onClick={postRecommendations}
+                >
                   Обновить Рекомендации
                 </button>
+                
               </div>
               <br />
             </div>

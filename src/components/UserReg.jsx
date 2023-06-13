@@ -7,6 +7,8 @@ import {useNavigate} from 'react-router-dom'
 const UserReg = () => {
     const [newUser, setNewUser] = useState({username:'', password:''});
     const router = useNavigate();
+    const [hov, setHov] = useState(false)
+    const [hov2, setHov2] = useState(false)
 
     const addNewUser = (e) => {
         e.preventDefault()
@@ -25,16 +27,28 @@ const UserReg = () => {
         if(user!=undefined){
             // setMe(user)
             setNewUser({ username: '', first_name: '', last_name: '', email: '', password: '' })
-            alert("Пользователь успешно зарегестрирован")
+            alert("Пользователь успешно зарегистрирован")
             router('/login')
         }
         else if(newUser.password.length <8){
             alert("Введенный пароль слишком короткий!!!")
         }
         else{
-            alert("Что-то пошло не по плану, проверьте правильность введенных данных!!!")
+            alert("Пароль слишком ненаджёный или похож на 'Имя пользователя'")
         }
     }
+
+    const btnStyle1 = {
+        backgroundColor: "#9999C3",
+        borderColor: "#9999C3",
+        margin: '5px 0'
+    };
+
+    const btnStyle2 = {
+        backgroundColor: "#585B9A",
+        borderColor: "#585B9A",
+        margin: '5px 0'
+    };
 
 
     return (
@@ -43,27 +57,9 @@ const UserReg = () => {
             <div style={{ display: 'flex', justifyContent: 'center' }}>
                 <div style={{ width: 100 + '%' }}>
                     <MyInput
-                        placeholder="Имя пользователя"
+                        placeholder="Имя пользователя*"
                         value={newUser.username}
                         onChange={e => setNewUser({ ...newUser, username: e.target.value })}
-                    />
-                </div>
-            </div>
-            <div style={{ display: 'flex', justifyContent: 'center' }}>
-                <div style={{ width: 100 + '%' }}>
-                    <MyInput
-                        placeholder="Имя"
-                        value={newUser.first_name}
-                        onChange={e => setNewUser({ ...newUser, first_name: e.target.value })}
-                    />
-                </div>
-            </div>
-            <div style={{ display: 'flex', justifyContent: 'center' }}>
-                <div style={{ width: 100 + '%' }}>
-                    <MyInput
-                        placeholder="Фамилия"
-                        value={newUser.last_name}
-                        onChange={e => setNewUser({ ...newUser, last_name: e.target.value })}
                     />
                 </div>
             </div>
@@ -79,19 +75,30 @@ const UserReg = () => {
             <div style={{ display: 'flex', justifyContent: 'center' }}>
                 <div style={{ width: 100 + '%' }}>
                     <MyInput
-                        placeholder="Пароль(минимум 8 символов)"
+                        placeholder="Пароль(минимум 8 символов)*"
                         value={newUser.password}
                         onChange={e => setNewUser({ ...newUser, password: e.target.value })}
                         type='password'
                     />
                 </div>
             </div>
-            <div className="d-flex justify-content-between mt-5">
+            <div className="d-flex justify-content-between mt-4">
                 <a href="login">
-                    <button>Авторизация</button>
+                    <button
+                        className="btn btn-primary"
+                        style={hov ? btnStyle2 : btnStyle1}
+                        onMouseEnter={() => setHov(true)}
+                        onMouseLeave={() => setHov(false)}
+                    >Авторизация</button>
                 </a>
 
-                <button onClick={addNewUser}>Зарегистрировать</button>
+                <button
+                    onClick={addNewUser}
+                    className="btn btn-primary"
+                    style={hov2 ? btnStyle2 : btnStyle1}
+                    onMouseEnter={() => setHov2(true)}
+                    onMouseLeave={() => setHov2(false)}
+                >Зарегистрировать</button>
             </div>
         </div>
     )

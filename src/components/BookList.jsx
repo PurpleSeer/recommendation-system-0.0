@@ -10,7 +10,7 @@ const BookList = ({ books, visible, setBookInfo }) => {
 
     return (
 
-        <div className="row justify-content-start mb-5">
+        <div className="row justify-content-start mb-3">
             {books.map((books, index) => (
                 <>
                     <BookItem books={books} key={books.id} visible={visible} setBookInfo={setBookInfo} />
